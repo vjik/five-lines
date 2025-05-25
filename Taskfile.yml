@@ -1,0 +1,20 @@
+version: "3"
+
+tasks:
+  default: task --list
+
+  docker-build:
+    desc: Build docker image
+    cmd: docker build -t five-lines .
+
+  build:
+    desc: Build application
+    cmd: docker run --rm -v "$(pwd):/app" -w /app five-lines tsc
+
+  watch-start:
+    desc: Start watching
+    cmd: docker run --rm --detach --name five-lines-watch -v "$(pwd):/app" -w /app five-lines tsc -w
+
+  watch-stop:
+    desc: Stop watching
+    cmd: docker stop five-lines-watch
